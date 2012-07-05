@@ -14,7 +14,6 @@ def prime(x)
     n+=2
     if prime?(n)
       pn+=1
-      puts "#{n}, #{pn}"
       return n if pn==x
     end
   end
