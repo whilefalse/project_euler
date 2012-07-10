@@ -16,3 +16,7 @@ best start factor
 
 answer :: (Integral a) => a
 answer = best (product nums) 2
+
+-- OR (Awesomeness)
+answer2 :: (Integral a) => a
+answer2 = foldr lcm 1 [1..20]
