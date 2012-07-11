@@ -1,4 +1,4 @@
-divisible n = sum (map (mod n) [1..20]) == 0
+divisible n = (==0) . sum $ map (mod n) [1..20]
 
 least factor acc = if divisible next then next else acc where next = acc `div` factor
 
