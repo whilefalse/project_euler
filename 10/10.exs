@@ -1,6 +1,6 @@
 defmodule Primes do
   def below(max) do
-    sieve = 2..max |> Enum.map(fn x -> {x, true} end) |> Map.new
+    sieve = 2..max |> Enum.map(fn x -> {x, true} end) |> Map.new()
 
     2..max
     |> Enum.reduce(sieve, fn x, sieve -> sieve_all(sieve, x, max) end)
@@ -24,4 +24,4 @@ defmodule Primes do
 end
 
 primes = Primes.below(2_000_000)
-IO.puts(Enum.sum primes)
+IO.puts(Enum.sum(primes))

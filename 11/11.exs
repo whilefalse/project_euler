@@ -19,33 +19,44 @@ grid_str = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
-grid = grid_str
-       |> String.split("\n")
-       |> Enum.map(fn line ->
-         String.split(line, " ")
-         |> Enum.map(&String.to_integer/1)
-       end)
+grid =
+  grid_str
+  |> String.split("\n")
+  |> Enum.map(fn line ->
+    String.split(line, " ")
+    |> Enum.map(&String.to_integer/1)
+  end)
 
 defmodule Grid do
   def prod_four(grid, x, y, dx, dy) do
     cond do
-      x + dx*3 > 19 or y + dy*3 > 19 or x + dx*3 < 0 -> 0
-        true -> 0..3 |> Enum.map(fn delta ->
-            grid |> Enum.at(y + dy*delta) |> Enum.at(x + dx*delta)
-        end) |> Enum.reduce(fn x, acc -> x * acc end)
+      x + dx * 3 > 19 or y + dy * 3 > 19 or x + dx * 3 < 0 ->
+        0
+
+      true ->
+        0..3
+        |> Enum.map(fn delta ->
+          grid |> Enum.at(y + dy * delta) |> Enum.at(x + dx * delta)
+        end)
+        |> Enum.reduce(fn x, acc -> x * acc end)
     end
   end
 
   def max(grid) do
-    0..19 |> Enum.flat_map(fn y ->
-      0..19 |> Enum.flat_map(fn x ->
-        [prod_four(grid, x, y, 1, 0),
+    0..19
+    |> Enum.flat_map(fn y ->
+      0..19
+      |> Enum.flat_map(fn x ->
+        [
+          prod_four(grid, x, y, 1, 0),
           prod_four(grid, x, y, 0, 1),
           prod_four(grid, x, y, 1, 1),
-          prod_four(grid, x, y, -1, 1)]
+          prod_four(grid, x, y, -1, 1)
+        ]
       end)
-    end) |> Enum.max
+    end)
+    |> Enum.max()
   end
 end
 
-IO.puts Grid.max(grid)
+IO.puts(Grid.max(grid))
